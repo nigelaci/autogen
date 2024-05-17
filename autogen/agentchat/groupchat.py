@@ -7,12 +7,12 @@ import sys
 from dataclasses import dataclass, field
 from typing import Callable, Dict, List, Literal, Optional, Tuple, Union
 
-from ..oai.client import ModelClient
 from ..code_utils import content_str
 from ..exception_utils import AgentNameConflict, NoEligibleSpeaker, UndefinedNextAgent
 from ..formatting_utils import colored
 from ..graph_utils import check_graph_validity, invert_disallowed_to_allowed
 from ..io.base import IOStream
+from ..oai.client import ModelClient
 from ..runtime_logging import log_new_agent, logging_enabled
 from .agent import Agent
 from .conversable_agent import ConversableAgent
@@ -564,7 +564,7 @@ class GroupChat:
         return agent if agent else self.next_agent(last_speaker, agents)
 
     def _register_client_from_config(self, agent: Agent, config: Dict):
-        model_client_cls_to_match = config.get('model_client_cls')
+        model_client_cls_to_match = config.get("model_client_cls")
         if model_client_cls_to_match:
             if not self.model_client_cls:
                 raise ValueError(
@@ -599,13 +599,12 @@ class GroupChat:
         if not self.llm_config:
             return
 
-        config_format_is_list = 'config_list' in self.llm_config.keys()
+        config_format_is_list = "config_list" in self.llm_config.keys()
         if config_format_is_list:
-            for config in self.llm_config['config_list']:
+            for config in self.llm_config["config_list"]:
                 self._register_client_from_config(agent, config)
         elif not config_format_is_list:
             self._register_client_from_config(agent, self.llm_config)
-
 
     def _auto_select_speaker(
         self,
