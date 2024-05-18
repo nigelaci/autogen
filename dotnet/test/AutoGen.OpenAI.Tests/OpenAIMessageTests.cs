@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 using ApprovalTests;
 using ApprovalTests.Namers;
 using ApprovalTests.Reporters;
-using AutoGen.OpenAI;
+using AutoGen.Tests;
 using Azure.AI.OpenAI;
 using FluentAssertions;
 using Xunit;
 
-namespace AutoGen.Tests;
+namespace AutoGen.OpenAI.Tests;
 
 public class OpenAIMessageTests
 {
@@ -34,15 +34,6 @@ public class OpenAIMessageTests
             new TextMessage(Role.System, "You are a helpful AI assistant"),
             new TextMessage(Role.User, "Hello", "user"),
             new TextMessage(Role.Assistant, "How can I help you?", from: "assistant"),
-            new Message(Role.System, "You are a helpful AI assistant"),
-            new Message(Role.User, "Hello", "user"),
-            new Message(Role.Assistant, "How can I help you?", from: "assistant"),
-            new Message(Role.Function, "result", "user"),
-            new Message(Role.Assistant, null, "assistant")
-            {
-                FunctionName = "functionName",
-                FunctionArguments = "functionArguments",
-            },
             new ImageMessage(Role.User, "https://example.com/image.png", "user"),
             new MultiModalMessage(Role.Assistant,
                 [
